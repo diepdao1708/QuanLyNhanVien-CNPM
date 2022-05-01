@@ -4,9 +4,10 @@
  */
 package view.dangkycalam;
 
-import controller.NhanVienDAO;
+import controller.DangKyCaLamDAO;
 import java.awt.Color;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.NhanVien;
 import view.user.TrangChuFrm;
@@ -23,7 +24,7 @@ public class TimKiemNhanVienFrm extends javax.swing.JFrame {
     
     private ArrayList<NhanVien> nhanViens;
     DefaultTableModel tm;
-    NhanVienDAO nhanVienDAO = new NhanVienDAO();
+    DangKyCaLamDAO dangKyCaLamDAO = new DangKyCaLamDAO();
     
     public TimKiemNhanVienFrm() {
         initComponents();
@@ -140,9 +141,12 @@ public class TimKiemNhanVienFrm extends javax.swing.JFrame {
 
     private void timBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_timBtnActionPerformed
         // TODO add your handling code here:
-        nhanViens = nhanVienDAO.getNhanViens(tenTxt.getText().trim());
-        
-        String[][] data = new String[nhanViens.size()][2];
+        nhanViens = dangKyCaLamDAO.getNhanViens(tenTxt.getText().trim());
+        if (nhanViens.size() == 0) {
+            JOptionPane.showMessageDialog(this, "Danh sách trống");
+        }
+        else{
+            String[][] data = new String[nhanViens.size()][2];
         for(int i=0 ; i<nhanViens.size();i++){
             var nhanVien = nhanViens.get(i);
             data[i][0] = nhanVien.getId()+"";
@@ -152,6 +156,7 @@ public class TimKiemNhanVienFrm extends javax.swing.JFrame {
         String[] cols = {"MNV", "Tên NV"};
         tm = new DefaultTableModel(data, cols);
         nhanVienTbl.setModel(tm);
+        }
     }//GEN-LAST:event_timBtnActionPerformed
 
     private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
@@ -165,7 +170,7 @@ public class TimKiemNhanVienFrm extends javax.swing.JFrame {
         int row = nhanVienTbl.getSelectedRow();
         if (row >= 0 && row <= nhanVienTbl.getRowCount()-1) {
             int id = Integer.parseInt(tm.getValueAt(row, 0).toString());
-            (new DangKyCaLamFrm(nhanVienDAO.getNhanVienById(id))).setVisible(true);
+            (new DangKyCaLamFrm(dangKyCaLamDAO.getNhanVienById(id))).setVisible(true);
             this.dispose();
         }
     }//GEN-LAST:event_nhanVienTblMouseClicked

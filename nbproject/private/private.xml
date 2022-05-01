@@ -2,6 +2,11 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/E:/KI6/QuanLyNhanVien-CNPM/src/view/dangkycalam/TimKiemNhanVienFrm.java</file>
+            <file>file:/E:/KI6/QuanLyNhanVien-CNPM/src/view/user/DangNhapFrm.java</file>
+            <file>file:/E:/KI6/QuanLyNhanVien-CNPM/src/controller/DangKyCaLamDAO.java</file>
+            <file>file:/E:/KI6/QuanLyNhanVien-CNPM/src/model/LichDangKy.java</file>
+        </group>
     </open-files>
 </project-private>
