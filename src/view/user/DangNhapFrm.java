@@ -7,7 +7,6 @@ import controller.QuanLyDAO;
 import java.awt.Color;
 import javax.swing.JOptionPane;
 import model.QuanLy;
-import view.user.TrangChuFrm;
 
 /**
  *

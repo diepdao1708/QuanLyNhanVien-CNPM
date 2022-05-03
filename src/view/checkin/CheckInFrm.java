@@ -4,7 +4,13 @@
  */
 package view.checkin;
 
+import controller.CheckInOutDAO;
+import controller.NhanVienDAO;
 import java.awt.Color;
+import java.util.Date;
+import javax.swing.JOptionPane;
+import model.CheckInOut;
+import model.NhanVien;
 import view.user.TrangChuFrm;
 
 /**
@@ -16,6 +22,9 @@ public class CheckInFrm extends javax.swing.JFrame {
     /**
      * Creates new form CheckInFrm
      */
+    CheckInOutDAO checkInOutDAO = new CheckInOutDAO();
+    NhanVienDAO nhanVienDAO = new NhanVienDAO();
+    
     public CheckInFrm() {
         initComponents();
         
@@ -35,7 +44,7 @@ public class CheckInFrm extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        mvnCheckInTxt = new javax.swing.JTextField();
+        mnvCheckInTxt = new javax.swing.JTextField();
         submitCheckInBtn = new javax.swing.JButton();
         backBtn = new javax.swing.JButton();
 
@@ -44,7 +53,7 @@ public class CheckInFrm extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setText("Check In");
 
-        mvnCheckInTxt.setText(" ");
+        mnvCheckInTxt.setText(" ");
 
         submitCheckInBtn.setBackground(new java.awt.Color(233, 110, 21));
         submitCheckInBtn.setForeground(new java.awt.Color(255, 255, 255));
@@ -71,7 +80,7 @@ public class CheckInFrm extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(143, 143, 143)
-                        .addComponent(mvnCheckInTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(mnvCheckInTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(26, 26, 26)
                         .addComponent(submitCheckInBtn))
                     .addGroup(layout.createSequentialGroup()
@@ -89,7 +98,7 @@ public class CheckInFrm extends javax.swing.JFrame {
                     .addComponent(backBtn))
                 .addGap(54, 54, 54)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(mvnCheckInTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(mnvCheckInTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(submitCheckInBtn))
                 .addContainerGap(272, Short.MAX_VALUE))
         );
@@ -99,8 +108,37 @@ public class CheckInFrm extends javax.swing.JFrame {
 
     private void submitCheckInBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitCheckInBtnActionPerformed
         // TODO add your handling code here:
+        if (mnvCheckInTxt.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Nhập mã nhân viên!");
+        } else {
+            int mnv = Integer.parseInt(mnvCheckInTxt.getText().trim());
+            if (nhanVienDAO.checkNhanVienById(mnv)) {
+                NhanVien nhanVien = nhanVienDAO.getNhanVienById(mnv);
+                Date gioCheckIn = currentTime();
+                Date gioCheckOut = null;
+                Date ngay = currentTime();
+                CheckInOut checkInOut = new CheckInOut(nhanVien, gioCheckIn, gioCheckOut, ngay);
+                if (!checkInOutDAO.checkCheckIn(checkInOut)) {
+                    if (checkInOutDAO.insertCheckIn(checkInOut)) {
+                        JOptionPane.showMessageDialog(this, "Check In thành công");
+                        (new TrangChuFrm()).setVisible(true);
+                        this.dispose();
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Check In thất bại");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "MNV: " + mnv + " đã check in ca làm");
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Không tìm thấy MNV: " + mnv);
+            }
+        }
     }//GEN-LAST:event_submitCheckInBtnActionPerformed
 
+    public Date currentTime() {
+        return new Date();
+    }
+  
     private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
         // TODO add your handling code here:
         (new TrangChuFrm()).setVisible(true);
@@ -110,7 +148,7 @@ public class CheckInFrm extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backBtn;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JTextField mvnCheckInTxt;
+    private javax.swing.JTextField mnvCheckInTxt;
     private javax.swing.JButton submitCheckInBtn;
     // End of variables declaration//GEN-END:variables
 }

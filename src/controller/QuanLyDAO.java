@@ -7,6 +7,7 @@ package controller;
 import static controller.DAO.con;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import model.QuanLy;
 
 /**
@@ -28,8 +29,8 @@ public class QuanLyDAO extends DAO {
                 System.out.println("Tài khoản: " + rs.getString("tai_khoan") + " - " + "Mật khẩu: " + rs.getString("mat_khau"));
                 return true;
             }
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (SQLException ex) {
+            System.out.println(ex);
             return false;
         }
         return false;

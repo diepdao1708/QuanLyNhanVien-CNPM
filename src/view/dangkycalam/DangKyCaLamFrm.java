@@ -4,7 +4,7 @@
  */
 package view.dangkycalam;
 
-import controller.DangKyCaLamDAO;
+import controller.LichDangKyDAO;
 import java.awt.Color;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -54,14 +54,11 @@ public class DangKyCaLamFrm extends javax.swing.JFrame {
         tm = new DefaultTableModel() {
             @Override
             public Class<?> getColumnClass(int columnIndex) {
-                switch (columnIndex) {
-                    case 0:
-                        return String.class;
-                    case 1:
-                        return Boolean.class;
-                    default:
-                        return Boolean.class ;
-                }
+                return switch (columnIndex) {
+                    case 0 -> String.class;
+                    case 1 -> Boolean.class;
+                    default -> Boolean.class;
+                };
             }
         };
         dangKytbl.setModel(tm);
@@ -98,16 +95,7 @@ public class DangKyCaLamFrm extends javax.swing.JFrame {
         calendar.add(Calendar.DATE, 6);
         return calendar.getTime();
     }
-    
-    public DangKyCaLamFrm() {
-        initComponents();
-        
-        setTitle("Đăng ký ca làm tuần tới");
-        setSize(620, 380);
-        setLocationRelativeTo(this);
-        getContentPane().setBackground(Color.white);
-    }
-
+   
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -291,22 +279,16 @@ public class DangKyCaLamFrm extends javax.swing.JFrame {
             Date ngay = calendar.getTime();
             Boolean chapNhan = false;
             LichDangKy lichDangKy = new LichDangKy(nhanVien, caSang, caToi, ngay, chapNhan);
-            DangKyCaLamDAO dangKyCaLamDAO = new DangKyCaLamDAO();
-            if(dangKyCaLamDAO.insertLichDangKy(lichDangKy)){
-                showDialog = true;
-            }
-            else{
-                showDialog = false;
-            }
+            LichDangKyDAO dangKyCaLamDAO = new LichDangKyDAO();
+            showDialog = dangKyCaLamDAO.insertLichDangKy(lichDangKy);
         }
         if(showDialog){
-                JOptionPane.showMessageDialog(this, "Lưu thành công!");
-                (new TrangChuFrm()).setVisible(true);
-                this.dispose();
-            }
-            else{
-                JOptionPane.showMessageDialog(this, "Lưu thất bại!");
-            }
+            JOptionPane.showMessageDialog(this, "Lưu thành công");
+            (new TrangChuFrm()).setVisible(true);
+            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(this, "Lưu thất bại");
+        }
     }//GEN-LAST:event_luuBtnActionPerformed
 
     private void thoiGianTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_thoiGianTxtActionPerformed

@@ -11,6 +11,7 @@ package controller;
  */
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 
 public class DAO {
     public static Connection con;
@@ -21,8 +22,8 @@ public class DAO {
                 Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
                 String url = "jdbc:sqlserver://localhost:1433;databaseName=quanly;encrypt=true;trustServerCertificate=true;integratedSecurity=true;";
                 con = DriverManager.getConnection(url);
-            } catch (Exception ex) {
-                ex.printStackTrace();
+            } catch (ClassNotFoundException | SQLException ex) {
+                System.out.println(ex);
             }
         }
     }

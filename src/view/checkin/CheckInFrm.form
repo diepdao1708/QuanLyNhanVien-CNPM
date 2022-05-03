@@ -28,7 +28,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="143" max="-2" attributes="0"/>
-                      <Component id="mvnCheckInTxt" min="-2" pref="165" max="-2" attributes="0"/>
+                      <Component id="mnvCheckInTxt" min="-2" pref="165" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                       <Component id="submitCheckInBtn" min="-2" max="-2" attributes="0"/>
                   </Group>
@@ -52,7 +52,7 @@
               </Group>
               <EmptySpace min="-2" pref="54" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="mvnCheckInTxt" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="mnvCheckInTxt" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="submitCheckInBtn" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="272" max="32767" attributes="0"/>
@@ -69,7 +69,7 @@
         <Property name="text" type="java.lang.String" value="Check In"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="mvnCheckInTxt">
+    <Component class="javax.swing.JTextField" name="mnvCheckInTxt">
       <Properties>
         <Property name="text" type="java.lang.String" value=" "/>
       </Properties>

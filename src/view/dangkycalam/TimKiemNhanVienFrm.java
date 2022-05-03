@@ -4,9 +4,13 @@
  */
 package view.dangkycalam;
 
-import controller.DangKyCaLamDAO;
+import controller.LichDangKyDAO;
+import controller.NhanVienDAO;
 import java.awt.Color;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.NhanVien;
@@ -24,7 +28,8 @@ public class TimKiemNhanVienFrm extends javax.swing.JFrame {
     
     private ArrayList<NhanVien> nhanViens;
     DefaultTableModel tm;
-    DangKyCaLamDAO dangKyCaLamDAO = new DangKyCaLamDAO();
+    LichDangKyDAO lichDangKyDAO = new LichDangKyDAO();
+    NhanVienDAO nhanVienDAO = new NhanVienDAO();
     
     public TimKiemNhanVienFrm() {
         initComponents();
@@ -89,9 +94,15 @@ public class TimKiemNhanVienFrm extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        nhanVienTbl.setFocusable(false);
         nhanVienTbl.setGridColor(new java.awt.Color(255, 255, 255));
+        nhanVienTbl.setOpaque(false);
+        nhanVienTbl.setRequestFocusEnabled(false);
+        nhanVienTbl.setRowSelectionAllowed(false);
         nhanVienTbl.setSelectionBackground(new java.awt.Color(255, 255, 255));
         nhanVienTbl.setShowGrid(false);
+        nhanVienTbl.setUpdateSelectionOnSort(false);
+        nhanVienTbl.setVerifyInputWhenFocusTarget(false);
         nhanVienTbl.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 nhanVienTblMouseClicked(evt);
@@ -141,21 +152,20 @@ public class TimKiemNhanVienFrm extends javax.swing.JFrame {
 
     private void timBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_timBtnActionPerformed
         // TODO add your handling code here:
-        nhanViens = dangKyCaLamDAO.getNhanViens(tenTxt.getText().trim());
-        if (nhanViens.size() == 0) {
+        nhanViens = nhanVienDAO.getNhanViens(tenTxt.getText().trim());
+        if (nhanViens.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Danh sách trống");
-        }
-        else{
+        } else {
             String[][] data = new String[nhanViens.size()][2];
-        for(int i=0 ; i<nhanViens.size();i++){
-            var nhanVien = nhanViens.get(i);
-            data[i][0] = nhanVien.getId()+"";
-            data[i][1] = nhanVien.getTen();
-        }
+            for(int i=0 ; i<nhanViens.size();i++){
+                var nhanVien = nhanViens.get(i);
+                data[i][0] = nhanVien.getId()+"";
+                data[i][1] = nhanVien.getTen();
+            }
         
-        String[] cols = {"MNV", "Tên NV"};
-        tm = new DefaultTableModel(data, cols);
-        nhanVienTbl.setModel(tm);
+            String[] cols = {"MNV", "Tên NV"};
+            tm = new DefaultTableModel(data, cols);
+            nhanVienTbl.setModel(tm);
         }
     }//GEN-LAST:event_timBtnActionPerformed
 
@@ -170,11 +180,26 @@ public class TimKiemNhanVienFrm extends javax.swing.JFrame {
         int row = nhanVienTbl.getSelectedRow();
         if (row >= 0 && row <= nhanVienTbl.getRowCount()-1) {
             int id = Integer.parseInt(tm.getValueAt(row, 0).toString());
-            (new DangKyCaLamFrm(dangKyCaLamDAO.getNhanVienById(id))).setVisible(true);
-            this.dispose();
+            NhanVien nhanVien = nhanVienDAO.getNhanVienById(id);
+            if (lichDangKyDAO.checkLichDangKy(nhanVien.getId(), firstDayNextWeek())) {
+                JOptionPane.showMessageDialog(this, "Nhân viên: " + nhanVien.getTen() + " đã đăng ký ca làm tuần tới");
+            } else {
+                (new DangKyCaLamFrm(nhanVien)).setVisible(true);
+                this.dispose();
+            }
         }
     }//GEN-LAST:event_nhanVienTblMouseClicked
 
+    private Date firstDayNextWeek() {
+        Calendar calendar = Calendar.getInstance();
+        String dayString = new SimpleDateFormat("EEEE").format(calendar.getTime());
+        while (!"Monday".equals(dayString)) {
+            calendar.add(Calendar.DATE, 1);
+            dayString = new SimpleDateFormat("EEEE").format(calendar.getTime());
+        }
+        return calendar.getTime();
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backBtn;
     private javax.swing.JLabel jLabel1;
