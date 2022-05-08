@@ -44,8 +44,8 @@ public class CheckInFrm extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        mnvCheckInTxt = new javax.swing.JTextField();
-        submitCheckInBtn = new javax.swing.JButton();
+        txtId = new javax.swing.JTextField();
+        btnSubmit = new javax.swing.JButton();
         backBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -53,14 +53,14 @@ public class CheckInFrm extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setText("Check In");
 
-        mnvCheckInTxt.setText(" ");
+        txtId.setText(" ");
 
-        submitCheckInBtn.setBackground(new java.awt.Color(233, 110, 21));
-        submitCheckInBtn.setForeground(new java.awt.Color(255, 255, 255));
-        submitCheckInBtn.setText("Submit");
-        submitCheckInBtn.addActionListener(new java.awt.event.ActionListener() {
+        btnSubmit.setBackground(new java.awt.Color(233, 110, 21));
+        btnSubmit.setForeground(new java.awt.Color(255, 255, 255));
+        btnSubmit.setText("Submit");
+        btnSubmit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                submitCheckInBtnActionPerformed(evt);
+                btnSubmitActionPerformed(evt);
             }
         });
 
@@ -80,9 +80,9 @@ public class CheckInFrm extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(143, 143, 143)
-                        .addComponent(mnvCheckInTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(26, 26, 26)
-                        .addComponent(submitCheckInBtn))
+                        .addComponent(btnSubmit))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(backBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(161, 161, 161)
@@ -98,22 +98,22 @@ public class CheckInFrm extends javax.swing.JFrame {
                     .addComponent(backBtn))
                 .addGap(54, 54, 54)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(mnvCheckInTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(submitCheckInBtn))
+                    .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSubmit))
                 .addContainerGap(272, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void submitCheckInBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitCheckInBtnActionPerformed
+    private void btnSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitActionPerformed
         // TODO add your handling code here:
-        if (mnvCheckInTxt.getText().trim().isEmpty()) {
+        if (txtId.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Nhập mã nhân viên!");
             return;
         }
         
-        int mnv = Integer.parseInt(mnvCheckInTxt.getText().trim());
+        int mnv = Integer.parseInt(txtId.getText().trim());
         if (!employeeDAO.checkEmployeeById(mnv)) {
             JOptionPane.showMessageDialog(this, "Không tìm thấy MNV: " + mnv);
             return;
@@ -137,7 +137,7 @@ public class CheckInFrm extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(this, "Check In thất bại");
         }
-    }//GEN-LAST:event_submitCheckInBtnActionPerformed
+    }//GEN-LAST:event_btnSubmitActionPerformed
 
     private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
         // TODO add your handling code here:
@@ -147,8 +147,8 @@ public class CheckInFrm extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backBtn;
+    private javax.swing.JButton btnSubmit;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JTextField mnvCheckInTxt;
-    private javax.swing.JButton submitCheckInBtn;
+    private javax.swing.JTextField txtId;
     // End of variables declaration//GEN-END:variables
 }

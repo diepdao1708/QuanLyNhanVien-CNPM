@@ -6,10 +6,6 @@ package model;
 
 import java.util.Date;
 
-/**
- *
- * @author Admin
- */
 public class Registration {
     private int id;
     private int tblEmployeeid;

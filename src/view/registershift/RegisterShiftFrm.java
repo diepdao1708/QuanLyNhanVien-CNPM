@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package view.dangkycalam;
+package view.registershift;
 
 import controller.RegistrationDAO;
 import java.awt.Color;
@@ -55,6 +55,7 @@ public class RegisterShiftFrm extends javax.swing.JFrame {
         
         listRegistration = registrationDAO.checkRegistration(employee, firstDayNextWeek(), lastDayNextWeek());
         if (!listRegistration.isEmpty()) {
+            tblRegistration.setEnabled(false);
             btnSave.setEnabled(false);
         }
         

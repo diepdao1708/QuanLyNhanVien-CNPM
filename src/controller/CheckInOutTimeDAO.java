@@ -11,10 +11,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import model.CheckInOutTime;
 
-/**
- *
- * @author Admin
- */
 public class CheckInOutTimeDAO extends DAO{
 
     public CheckInOutTimeDAO() {

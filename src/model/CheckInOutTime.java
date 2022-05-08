@@ -6,10 +6,6 @@ package model;
 
 import java.util.Date;
 
-/**
- *
- * @author Admin
- */
 public class CheckInOutTime {
     private int id;
     private int tblEmployeeid;

@@ -3,7 +3,7 @@ package view.login;
 import java.awt.Color;
 import view.checkin.CheckInFrm;
 import view.checkout.CheckOutFrm;
-import view.dangkycalam.SearchEmployeeRegisterShiftFrm;
+import view.registershift.SearchEmployeeRegisterShiftFrm;
 import view.thongkedunggio.ThongKeDungGioFrm;
 import view.tinhcongtuannay.TinhCongTuanNayFrm;
 

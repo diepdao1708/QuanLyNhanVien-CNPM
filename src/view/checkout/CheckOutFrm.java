@@ -7,22 +7,12 @@ package view.checkout;
 import controller.CheckInOutTimeDAO;
 import controller.EmployeeDAO;
 import java.awt.Color;
-import java.util.Calendar;
 import java.util.Date;
 import javax.swing.JOptionPane;
 import model.CheckInOutTime;
 import view.login.HomeFrm;
 
-/**
- *
- * @author Admin
- */
 public class CheckOutFrm extends javax.swing.JFrame {
-
-    /**
-     * Creates new form CheckOutFrm
-     */
-    
     CheckInOutTimeDAO checkInOutDAO = new CheckInOutTimeDAO();
     EmployeeDAO employeeDAO = new EmployeeDAO();
     
@@ -48,8 +38,8 @@ public class CheckOutFrm extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         submitBtn = new javax.swing.JButton();
-        submitCheckOutBtn = new javax.swing.JButton();
-        mnvCheckOutTxt = new javax.swing.JTextField();
+        btnSubmit = new javax.swing.JButton();
+        txtId = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         backBtn = new javax.swing.JButton();
 
@@ -99,16 +89,16 @@ public class CheckOutFrm extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        submitCheckOutBtn.setBackground(new java.awt.Color(233, 110, 21));
-        submitCheckOutBtn.setForeground(new java.awt.Color(255, 255, 255));
-        submitCheckOutBtn.setText("Submit");
-        submitCheckOutBtn.addActionListener(new java.awt.event.ActionListener() {
+        btnSubmit.setBackground(new java.awt.Color(233, 110, 21));
+        btnSubmit.setForeground(new java.awt.Color(255, 255, 255));
+        btnSubmit.setText("Submit");
+        btnSubmit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                submitCheckOutBtnActionPerformed(evt);
+                btnSubmitActionPerformed(evt);
             }
         });
 
-        mnvCheckOutTxt.setText(" ");
+        txtId.setText(" ");
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel2.setText("Check Out");
@@ -129,9 +119,9 @@ public class CheckOutFrm extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(143, 143, 143)
-                        .addComponent(mnvCheckOutTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(26, 26, 26)
-                        .addComponent(submitCheckOutBtn))
+                        .addComponent(btnSubmit))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(backBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(161, 161, 161)
@@ -147,8 +137,8 @@ public class CheckOutFrm extends javax.swing.JFrame {
                     .addComponent(backBtn))
                 .addGap(54, 54, 54)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(mnvCheckOutTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(submitCheckOutBtn))
+                    .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSubmit))
                 .addContainerGap(272, Short.MAX_VALUE))
         );
 
@@ -159,14 +149,14 @@ public class CheckOutFrm extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_submitBtnActionPerformed
 
-    private void submitCheckOutBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitCheckOutBtnActionPerformed
+    private void btnSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitActionPerformed
         // TODO add your handling code here:
-        if (mnvCheckOutTxt.getText().trim().isEmpty()) {
+        if (txtId.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Nhập mã nhân viên!");
             return;
         }
         
-        int mnv = Integer.parseInt(mnvCheckOutTxt.getText().trim());
+        int mnv = Integer.parseInt(txtId.getText().trim());
         if (!employeeDAO.checkEmployeeById(mnv)) {
             JOptionPane.showMessageDialog(this, "Không tìm thấy MNV: " + mnv);
             return;
@@ -187,7 +177,7 @@ public class CheckOutFrm extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(this, "Check out thất bại");
         }
-    }//GEN-LAST:event_submitCheckOutBtnActionPerformed
+    }//GEN-LAST:event_btnSubmitActionPerformed
 
     public Date currentTime() {
         return new Date();
@@ -201,12 +191,12 @@ public class CheckOutFrm extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backBtn;
+    private javax.swing.JButton btnSubmit;
     private javax.swing.JFrame jFrame1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField mnvCheckOutTxt;
     private javax.swing.JButton submitBtn;
-    private javax.swing.JButton submitCheckOutBtn;
+    private javax.swing.JTextField txtId;
     // End of variables declaration//GEN-END:variables
 }
