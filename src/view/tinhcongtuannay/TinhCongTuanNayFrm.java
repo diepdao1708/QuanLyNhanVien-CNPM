@@ -5,7 +5,7 @@
 package view.tinhcongtuannay;
 
 import java.awt.Color;
-import view.user.TrangChuFrm;
+import view.login.HomeFrm;
 
 /**
  *
@@ -133,7 +133,7 @@ public class TinhCongTuanNayFrm extends javax.swing.JFrame {
 
     private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
         // TODO add your handling code here:
-        (new TrangChuFrm()).setVisible(true);
+        (new HomeFrm()).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_backBtnActionPerformed
 

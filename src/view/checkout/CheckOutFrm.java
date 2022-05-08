@@ -4,14 +4,14 @@
  */
 package view.checkout;
 
-import controller.CheckInOutDAO;
-import controller.NhanVienDAO;
+import controller.CheckInOutTimeDAO;
+import controller.EmployeeDAO;
 import java.awt.Color;
+import java.util.Calendar;
 import java.util.Date;
 import javax.swing.JOptionPane;
-import model.CheckInOut;
-import model.NhanVien;
-import view.user.TrangChuFrm;
+import model.CheckInOutTime;
+import view.login.HomeFrm;
 
 /**
  *
@@ -23,8 +23,8 @@ public class CheckOutFrm extends javax.swing.JFrame {
      * Creates new form CheckOutFrm
      */
     
-    CheckInOutDAO checkInOutDAO = new CheckInOutDAO();
-    NhanVienDAO nhanVienDAO = new NhanVienDAO();
+    CheckInOutTimeDAO checkInOutDAO = new CheckInOutTimeDAO();
+    EmployeeDAO employeeDAO = new EmployeeDAO();
     
     public CheckOutFrm() {
         initComponents();
@@ -163,32 +163,29 @@ public class CheckOutFrm extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (mnvCheckOutTxt.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Nhập mã nhân viên!");
+            return;
+        }
+        
+        int mnv = Integer.parseInt(mnvCheckOutTxt.getText().trim());
+        if (!employeeDAO.checkEmployeeById(mnv)) {
+            JOptionPane.showMessageDialog(this, "Không tìm thấy MNV: " + mnv);
+            return;
+        }
+        
+        Date gioCheckOut = new Date();
+        Date ngay = new Date();
+        CheckInOutTime checkInOut = new CheckInOutTime(mnv, gioCheckOut, ngay);
+        if (!checkInOutDAO.checkCheckOut(checkInOut)) {
+            JOptionPane.showMessageDialog(this, "MNV: " + mnv + " đã check out ca làm");
+            return;
+        }
+        
+        if (checkInOutDAO.updateCheckOut(checkInOut)) {
+            JOptionPane.showMessageDialog(this, "Check out thành công");
+            (new HomeFrm()).setVisible(true);
+            this.dispose();
         } else {
-            int mnv = Integer.parseInt(mnvCheckOutTxt.getText().trim());
-            if (nhanVienDAO.checkNhanVienById(mnv)) {
-                NhanVien nhanVien = nhanVienDAO.getNhanVienById(mnv);
-                Date gioCheckIn = null;
-                Date gioCheckOut = currentTime();
-                Date ngay = currentTime();
-                CheckInOut checkInOut = new CheckInOut(nhanVien, gioCheckIn, gioCheckOut, ngay);
-                if (checkInOutDAO.checkCheckIn(checkInOut)) {
-                    if (checkInOutDAO.checkCheckOut(checkInOut)) {
-                        if (checkInOutDAO.updateCheckOut(checkInOut)) {
-                            JOptionPane.showMessageDialog(this, "Check out thành công");
-                            (new TrangChuFrm()).setVisible(true);
-                            this.dispose();
-                        } else {
-                            JOptionPane.showMessageDialog(this, "Check out thất bại");
-                        }
-                    } else {
-                        JOptionPane.showMessageDialog(this, "MNV: " + mnv + " đã check out ca làm");
-                    }
-                } else {
-                    JOptionPane.showMessageDialog(this, "MNV: " + mnv + " chưa check in ca làm");
-                }
-            } else {
-                JOptionPane.showMessageDialog(this, "Không tìm thấy MNV: " + mnv);
-            }
+            JOptionPane.showMessageDialog(this, "Check out thất bại");
         }
     }//GEN-LAST:event_submitCheckOutBtnActionPerformed
 
@@ -198,7 +195,7 @@ public class CheckOutFrm extends javax.swing.JFrame {
     
     private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
         // TODO add your handling code here:
-        (new TrangChuFrm()).setVisible(true);
+        (new HomeFrm()).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_backBtnActionPerformed
 

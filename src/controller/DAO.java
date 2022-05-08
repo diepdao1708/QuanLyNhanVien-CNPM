@@ -20,7 +20,7 @@ public class DAO {
         if(con == null){
             try {
                 Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-                String url = "jdbc:sqlserver://localhost:1433;databaseName=quanly;encrypt=true;trustServerCertificate=true;integratedSecurity=true;";
+                String url = "jdbc:sqlserver://localhost:1433;databaseName=cnpm;encrypt=true;trustServerCertificate=true;integratedSecurity=true;";
                 con = DriverManager.getConnection(url);
             } catch (ClassNotFoundException | SQLException ex) {
                 System.out.println(ex);
